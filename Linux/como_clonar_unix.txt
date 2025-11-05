@@ -1,0 +1,9 @@
+# usar el comando de dd: depende de la generación 1M,100M,1G,2G,5G en la velocidad de transferencia bs
+sudo dd if=/dev/disco_fuente/sdx of=/dev/disco_destino/sdb bs=2G status=progress
+
+# dura alrededor de 1hra (probe con 2, nomas que un usb es de baja velocidad de escritura)
+# Multiples discos al mismo tiempo usando tee y dd
+sudo dd if=CimaLinux.img | tee >(dd of/dev/disk1) >(dd of=/dev/disk2) | dd of/dev/diskN status=progress
+
+# Multiples dicos al mismo tiempo usando tee y >
+sudo tee /dev/disk1 /dev/dis2 > /dev/diskN < CimaLinux.img
