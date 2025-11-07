@@ -1,0 +1,8 @@
+// Coloque sus atajos de teclado en este archivo para sobreescribir los valores predeterminados
+[
+    {
+        "key": "ctrl+/",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly && (editorLangId == 'c' || editorLangId == 'h')"
+    }
+]

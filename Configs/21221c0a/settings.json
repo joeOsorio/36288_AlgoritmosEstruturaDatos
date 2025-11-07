@@ -1,0 +1,108 @@
+{
+    // Tema y apariencia general
+    "workbench.colorTheme": "Default High Contrast", // Tema de colores de alto contraste para todo el entorno de trabajo.
+    "workbench.iconTheme": "material-icon-theme", // Tema de íconos para archivos y carpetas en el explorador.
+    "workbench.productIconTheme": "fluent-icons", // Tema de íconos para la interfaz de usuario (barra de herramientas, etc.).
+
+    // Configuraciones de edición
+    "editor.cursorSmoothCaretAnimation": "explicit", // Anima el cursor cuando se mueve con teclas de dirección o clics.
+    "editor.fontLigatures": true, // Habilita ligaduras en la fuente (como "==", "=>", etc.).
+    "editor.fontFamily": "'Fira Code Light',Consolas, 'Courier New', monospace", // Define la familia de fuentes para el editor.
+    "editor.minimap.showSlider": "always", // Siempre muestra el slider de la minimapa.
+    "editor.fontWeight": "normal", // Peso de la fuente en el editor (normal).
+    "editor.rulers": [130], // Muestra una regla vertical en la columna 130.
+    "editor.wordWrapColumn": 130, // Define la columna donde se realiza el ajuste de línea.
+    "editor.wordWrap": "on", // Activa el ajuste de línea automáticamente.
+    "editor.guides.bracketPairs": true, // Muestra guías de emparejamiento de corchetes.
+    "editor.minimap.enabled": false, // Desactiva la minimapa en el editor.
+    "editor.scrollbar.vertical": "auto", // Muestra la barra de desplazamiento vertical solo cuando es necesario.
+    "editor.overviewRulerBorder": false, // Oculta el borde de la regla de visión general.
+    "editor.hideCursorInOverviewRuler": true, // Oculta el cursor en la regla de visión general.
+    "editor.formatOnSave": true, // Formatea el código automáticamente al guardar.
+    "editor.guides.indentation": false, // Desactiva las guías de indentación.
+    "indenticator.width": 0.1, // Ancho del indicador de indentación.
+    "indenticator.color.dark": "rgba(255,255,255,0.1)", // Color del indicador de indentación en temas oscuros.
+    "editor.matchBrackets": "never", // Desactiva el emparejamiento automático de corchetes.
+    "editor.glyphMargin": true, // Muestra el margen de glifos (usado para depuración y otros símbolos).
+
+    // Configuraciones del explorador de archivos
+    "explorer.confirmDelete": false, // No pide confirmación al eliminar archivos.
+    "explorer.confirmDragAndDrop": false, // No pide confirmación al arrastrar y soltar archivos.
+    "workbench.editor.showTabs": "multiple", // Muestra solo una pestaña de editor.
+    "workbench.sideBar.location": "right", // Coloca la barra lateral en la derecha.
+    "workbench.activityBar.location": "hidden", // Oculta la barra de actividades.
+    "explorer.autoReveal": true, // Revela automáticamente el archivo abierto en el explorador.
+
+    // Configuraciones de terminal
+    "terminal.integrated.defaultProfile.windows": "Cmder", // Perfil predeterminado de la terminal en Windows.
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell",
+            "color": "terminal.ansiBlue"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "Cmder": {
+      "name": "Cmder",
+      "path": "C:\\WINDOWS\\System32\\cmd.exe",
+      // "path": "C:\\otrasApps\\Cmder\\Cmder.exe",
+      "args": ["/k", "C:\\otrasApps\\Cmder\\vendor\\bin\\vscode_init.cmd"],
+      "icon": "terminal",
+      "color": "terminal.ansiGreen"
+    }
+    },
+    
+
+    // Guardado automático y edición enlazada
+    "files.autoSave": "afterDelay", // Guarda los archivos automáticamente después de un breve retraso.
+    "editor.linkedEditing": true, // Habilita la edición enlazada (cambia etiquetas de HTML relacionadas, por ejemplo).
+
+    // Configuraciones de Jupyter Notebook
+    "notebook.lineNumbers": "on", // Muestra los números de línea en los cuadernos de Jupyter.
+
+    // Configuraciones de depuración y tareas
+    "debug.onTaskErrors": "debugAnyway", // Continúa depurando incluso si hay errores en las tareas.
+    "workbench.startupEditor": "none", // No abre ningún editor al inicio.
+
+    // Configuración de compilación para C/C++
+    // "c-cpp-compile-run.c-flags": "-Wall -Werror -Wall -Wextra -std=c90 -Wpedantic -Wstrict-prototypes", // Flags de compilación para el estándar ANSI C (C90).
+    
+    // Configuración para CMake
+    "cmake.configureOnOpen": true, // Configura automáticamente CMake al abrir un proyecto.
+    "cmake.additionalCompilerSearchDirs": [
+        "C:/msys64/mingw32/bin",
+        "C:/msys64/clang32/bin",
+        "C:/msys64/clang64/bin",
+        "C:/msys64/clangarm64/bin",
+        "C:/msys64/ucrt64/bin"
+    ], // Directorios adicionales para buscar compiladores con CMake.
+    
+    // Configuraciones del explorador de símbolos
+    "material-icon-theme.hidesExplorerArrows": true, // Oculta las flechas de expansión en el tema de íconos.
+
+    // Prueba de configuración de colores
+    "workbench.colorCustomizations": {
+        "titleBar.border": "#00000000", // Elimina el borde de la barra de título.
+        "sideBarSectionHeader.border": "#00000000", // Elimina el borde del encabezado de la barra lateral.
+        "statusBar.border": "#00000000", // Elimina el borde de la barra de estado.
+        "editor.lineHighlightBackground": "#000000", // Fondo negro para la línea resaltada en el editor.
+        "statusBar.background": "#000000", // Color de fondo de la barra de estado
+        "statusBar.foreground": "#ffffff", // Color del texto en la barra de estado
+        
+    },
+    // "c-cpp-compile-run.cpp-flags":"-Wall -Werror -Wall -Wextra -std=c90 -Wpedantic -Wstrict-prototypes",
+    "c-cpp-compile-run.run-in-external-terminal": true,
+    "c-cpp-compile-run.run-args": "true",
+    "explorer.confirmPasteNative": false,
+    "git.autofetch": true,
+}
