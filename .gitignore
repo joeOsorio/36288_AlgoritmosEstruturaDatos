@@ -53,7 +53,6 @@ Thumbs.db
 ehthumbs.db
 desktop.ini
 
-# --- Configuraciones locales de VSCode (opcional) ---
 # .vscode/
 # !.vscode/settings.json
 # !.vscode/tasks.json
