@@ -15,7 +15,7 @@ int main(void)
     COLA *matriculaAlumnos = crearCola();
     int opcion, num, *temp;
 
-    do
+    d
     {
         printf("-------------------------------\n");
         printf("Elige la operacion a ejecutar: \n");
