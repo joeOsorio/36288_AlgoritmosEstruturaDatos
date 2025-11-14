@@ -16,7 +16,7 @@
                 "-Wpedantic",
                 "-Wstrict-prototypes",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe"
+                "${fileDirname}/output/${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -39,7 +39,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe"
+                "${fileDirname}/output/${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -52,14 +52,14 @@
         },
         {
             "type": "cppbuild",
-            "label": "C/C++: gcc-13 compilar archivo activo",
+            "label": "C/C++: gcc-13 compilar archivo (Linux)",
             "command": "/usr/bin/gcc-13",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/output/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -135,4 +135,3 @@
         }
     ]
 }
-
