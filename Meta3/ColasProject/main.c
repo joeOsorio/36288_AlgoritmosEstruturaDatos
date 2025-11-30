@@ -1,325 +1,183 @@
 /**
- * @file colas.c
- * @brief Implementación de funciones para manejo de colas
+ * @file main.c
+ * @brief Programa de prueba para librería de colas
  * @author J. Osorio, Y. Prado and A. Fabara
- * @date Nov/2025
+ * @date 2025
  */
 
-#include "colas.h"
 #include <stdio.h>
-#include <stdlib.h>
+#include "colas.h"
+#include "main.h"
 
-/******************************
- * COLA NORMAL (SIMPLE)
- ******************************/
+void probar_cola_normal(void);
+void probar_cola_doble(void);
 
-/**
- * @brief Crea una nueva cola vacía
- * @return Puntero a la cola creada
- */
-cola *cola_crear(void)
+int main(void)
 {
-    cola *nueva_cola = (cola *)malloc(sizeof(cola));
-    if (nueva_cola == NULL)
+    int opcion;
+
+    printf("=== PRUEBA DE LIBRERIA DE COLAS ===\n");
+
+    do
     {
-        fprintf(stderr, "Error: No se pudo crear la cola\n");
-        return NULL;
-    }
-    nueva_cola->frente = NULL;
-    nueva_cola->final = NULL;
-    return nueva_cola;
-}
+        printf("\n=== SISTEMA DE COLAS ===\n");
+        printf("1. Probar Cola Normal\n");
+        printf("2. Probar Cola Doblemente Enlazada\n");
+        printf("3. Salir\n");
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
 
-/**
- * @brief Verifica si la cola está vacía
- * @param c Puntero a la cola
- * @return 1 si está vacía, 0 si no
- */
-int cola_vacia(cola *c)
-{
-    return (c == NULL || c->frente == NULL) ? 1 : 0;
-}
+        switch (opcion)
+        {
+        case 1:
+            probar_cola_normal();
+            break;
 
-/**
- * @brief Verifica si la cola está llena (solo por memoria)
- * @return 1 si no hay memoria, 0 si hay memoria disponible
- */
+        case 2:
+            probar_cola_doble();
+            break;
 
-int cola_llena(void)
-{
-    nodo_cola *test = (nodo_cola *)malloc(sizeof(nodo_cola));
-    if (test == NULL)
-    {
-        return 1;
-    }
-    free(test);
+        case 3:
+            printf("Saliendo del programa...\n");
+            break;
+
+        default:
+            printf("Opcion invalida\n");
+            break;
+        }
+    } while (opcion != 3);
     return 0;
 }
 
-/**
- * @brief Inserta un elemento al final de la cola
- * @param c Puntero a la cola
- * @param n Valor a insertar
- */
-void cola_insertar(cola *c, int n)
+void probar_cola_normal(void)
 {
+    cola *c = cola_crear();
+    int opcion, valor;
     if (c == NULL)
-    {
-        fprintf(stderr, "Error: Cola no inicializada\n");
         return;
-    }
 
-    if (cola_llena())
+    printf("\n--- COLA NORMAL ---\n");
+    do
     {
-        fprintf(stderr, "Error: No hay memoria disponible\n");
-        return;
-    }
+        printf("\nOperaciones Cola Normal:\n");
+        printf("1. Insertar\n");
+        printf("2. Remover\n");
+        printf("3. Mostrar\n");
+        printf("4. Tamaño\n");
+        printf("5. ¿Está vacía?\n");
+        printf("6. ¿Está llena?\n");
+        printf("7. Vaciar\n");
+        printf("8. Regresar al menu principal\n");
+        printf("Opcion: ");
 
-    nodo_cola *nuevo_nodo = (nodo_cola *)malloc(sizeof(nodo_cola));
-    if (nuevo_nodo == NULL)
-    {
-        fprintf(stderr, "Error: No se pudo crear nodo\n");
-        return;
-    }
+        scanf("%d", &opcion);
 
-    nuevo_nodo->dato = n;
-    nuevo_nodo->siguiente = NULL;
-
-    if (cola_vacia(c))
-    {
-        c->frente = nuevo_nodo;
-        c->final = nuevo_nodo;
-    }
-    else
-    {
-        c->final->siguiente = nuevo_nodo;
-        c->final = nuevo_nodo;
-    }
-}
-
-/**
- * @brief Remueve el primer elemento de la cola
- * @param c Puntero a la cola
- * @return Valor removido, o -1 si hay error
- */
-
-int cola_remover(cola *c)
-{
-    nodo_cola *aux;
-    int valor;
-    if (cola_vacia(c))
-    {
-        fprintf(stderr, "Error: No se puede remover de cola vacia\n");
-        return -1;
-    }
-
-    aux = c->frente;
-    valor = aux->dato;
-
-    c->frente = c->frente->siguiente;
-
-    /* Si la cola queda vacía, actualizar final también */
-    if (c->frente == NULL)
-    {
-        c->final = NULL;
-    }
-
-    free(aux);
-    return valor;
-}
-
-/**
- * @brief Muestra todos los elementos de la cola
- * @param c Puntero a la cola
- */
-void cola_mostrar(cola *c)
-{
-    nodo_cola *actual;
-
-    if (cola_vacia(c))
-    {
-        printf("La cola esta vacia\n");
-        return;
-    }
-
-    nodo_cola *actual = c->frente;
-    printf("Elementos de la cola (frente -> final): ");
-    while (actual != NULL)
-    {
-        printf("%d", actual->dato);
-        if (actual->siguiente != NULL)
+        switch (opcion)
         {
-            printf(" -> ");
+        case 1:
+            printf("Valor a insertar: ");
+            scanf("%d", &valor);
+            cola_insertar(c, valor);
+            break;
+
+        case 2:
+            valor = cola_remover(c);
+            if (valor != -1)
+            {
+                printf("Valor removido: %d\n", valor);
+            }
+            break;
+
+        case 3:
+            cola_mostrar(c);
+            break;
+
+        case 4:
+            printf("Elementos en cola: %d\n", cola_size(c));
+            break;
+
+        case 5:
+            printf("Cola vacia: %s\n", cola_vacia(c) ? "SI" : "NO");
+            break;
+
+        case 6:
+            printf("Cola llena: %s\n", cola_llena() ? "SI" : "NO");
+            break;
+
+        case 7:
+            cola_vaciar(c);
+            printf("Cola vaciada\n");
+            break;
+
+        case 8:
+            printf("Regresando...\n");
+            break;
+
+        default:
+            printf("Opcion invalida\n");
+            break;
         }
-        actual = actual->siguiente;
-    }
-    printf("\n");
+    } while (opcion != 8);
+
+    cola_vaciar(c);
+    free(c);
 }
 
-/**
- * @brief Calcula el número de elementos en la cola
- * @param c Puntero a la cola
- * @return Cantidad de elementos
- */
-
-int cola_size(cola *c)
+void probar_cola_doble(void)
 {
-    nodo_cola *actual;
-    int contador;
-    if (cola_vacia(c))
-    {
-        return 0;
-    }
-
-    contador = 0;
-    actual = c->frente;
-    while (actual != NULL)
-    {
-        contador++;
-        actual = actual->siguiente;
-    }
-    return contador;
-}
-
-/**
- * @brief Vacía todos los elementos de la cola
- * @param c Puntero a la cola
- */
-void cola_vaciar(cola *c)
-{
-    if (c == NULL)
-        return;
-
-    while (!cola_vacia(c))
-    {
-        cola_remover(c);
-    }
-}
-
-/******************************
- * COLA DOBLEMENTE ENLAZADA
- ******************************/
-
-/**
- * @brief Crea una nueva cola doble vacía
- * @return Puntero a la cola doble creada
- */
-cola_doble *cola_doble_crear(void)
-{
-    cola_doble *nueva_cola = (cola_doble *)malloc(sizeof(cola_doble));
-    if (nueva_cola == NULL)
-    {
-        fprintf(stderr, "Error: No se pudo crear la cola doble\n");
-        return NULL;
-    }
-    nueva_cola->frente = NULL;
-    nueva_cola->final = NULL;
-    return nueva_cola;
-}
-
-/**
- * @brief Verifica si la cola doble está vacía
- * @param cd Puntero a la cola doble
- * @return 1 si está vacía, 0 si no
- */
-int cola_doble_vacia(cola_doble *cd)
-{
-    return (cd == NULL || cd->frente == NULL);
-}
-
-/**
- * @brief Inserta un elemento al final de la cola doble
- * @param cd Puntero a la cola doble
- * @param n Valor a insertar
- */
-void cola_doble_insertar(cola_doble *cd, int n)
-{
-    nodo_doble *nuevo_nodo;
+    cola_doble *cd = cola_doble_crear();
+    int opcion, valor;
     if (cd == NULL)
-    {
-        fprintf(stderr, "Error: Cola doble no inicializada\n");
         return;
-    }
 
-    nuevo_nodo = (nodo_doble *)malloc(sizeof(nodo_doble));
-    if (nuevo_nodo == NULL)
+    printf("\n--- COLA DOBLEMENTE ENLAZADA ---\n");
+    do
     {
-        fprintf(stderr, "Error: No se pudo crear nodo doble\n");
-        return;
-    }
+        printf("\nOperaciones Cola Doble:\n");
+        printf("1. Insertar\n");
+        printf("2. Remover\n");
+        printf("3. Mostrar\n");
+        printf("4. ¿Está vacía?\n");
+        printf("5. Regresar al menu principal\n");
+        printf("Opcion: ");
 
-    nuevo_nodo->dato = n;
-    nuevo_nodo->siguiente = NULL;
-    nuevo_nodo->anterior = cd->final;
+        scanf("%d", &opcion);
 
-    if (cola_doble_vacia(cd))
-    {
-        cd->frente = nuevo_nodo;
-        cd->final = nuevo_nodo;
-    }
-    else
-    {
-        cd->final->siguiente = nuevo_nodo;
-        cd->final = nuevo_nodo;
-    }
-}
-
-/**
- * @brief Remueve el primer elemento de la cola doble
- * @param cd Puntero a la cola doble
- * @return Valor removido, o -1 si hay error
- */
-int cola_doble_remover(cola_doble *cd)
-{
-    nodo_doble *aux;
-    int valor;
-    if (cola_doble_vacia(cd))
-    {
-        fprintf(stderr, "Error: No se puede remover de cola doble vacia\n");
-        return -1;
-    }
-
-    aux = cd->frente;
-    valor = aux->dato;
-
-    cd->frente = cd->frente->siguiente;
-
-    if (cd->frente != NULL)
-    {
-        cd->frente->anterior = NULL;
-    }
-    else
-    {
-        cd->final = NULL; // Cola queda vacía
-    }
-
-    free(aux);
-    return valor;
-}
-
-/**
- * @brief Muestra todos los elementos de la cola doble
- * @param cd Puntero a la cola doble
- */
-
-void cola_doble_mostrar(cola_doble *cd)
-{
-    if (cola_doble_vacia(cd))
-    {
-        printf("La cola doble esta vacia\n");
-        return;
-    }
-
-    nodo_doble *actual = cd->frente;
-    printf("Elementos de la cola doble (frente -> final): ");
-    while (actual != NULL)
-    {
-        printf("%d", actual->dato);
-        if (actual->siguiente != NULL)
+        switch (opcion)
         {
-            printf(" <-> ");
+        case 1:
+            printf("Valor a insertar: ");
+            scanf("%d", &valor);
+            cola_doble_insertar(cd, valor);
+            break;
+
+        case 2:
+            valor = cola_doble_remover(cd);
+            if (valor != -1)
+            {
+                printf("Valor removido: %d\n", valor);
+            }
+            break;
+
+        case 3:
+            cola_doble_mostrar(cd);
+            break;
+
+        case 4:
+            printf("Cola doble vacia: %s\n", cola_doble_vacia(cd) ? "SI" : "NO");
+            break;
+
+        case 5:
+            printf("Regresando...\n");
+            break;
+
+        default:
+            printf("Opcion invalida\n");
+            break;
         }
-        actual = actual->siguiente;
-    }
-    printf("\n");
+    } while (opcion != 5);
+
+    /* Liberar memoria de la cola doble (implementar cola_doble_vaciar si es necesario) */
+    cola_doble_vacia(cd);
+    free(cd);
 }

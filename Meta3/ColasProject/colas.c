@@ -2,7 +2,7 @@
  * @file colas.c
  * @brief Implementación de funciones para manejo de colas
  * @author J. Osorio, Y. Prado and A. Fabara
- * @date 2025
+ * @date Nov/2025
  */
 
 #include "colas.h"
@@ -17,6 +17,7 @@
  * @brief Crea una nueva cola vacía
  * @return Puntero a la cola creada
  */
+
 cola *cola_crear(void)
 {
     cola *nueva_cola = (cola *)malloc(sizeof(cola));

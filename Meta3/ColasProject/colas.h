@@ -21,6 +21,7 @@ typedef struct cola
 } cola;
 
 /* Operaciones básicas - Cola Normal */
+
 cola *cola_crear(void);
 void cola_insertar(cola *c, int n);
 int cola_remover(cola *c);
