@@ -6,7 +6,6 @@
  * Comments:
  ***************************************************/
 
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,6 +15,7 @@ NODO *crearNodo(int dato)
 {
     NODO *nodo = (NODO *)malloc(sizeof(NODO));
     nodo->dato = dato;
+    nodo->padre = NULL;
     nodo->izq = NULL;
     nodo->der = NULL;
     return nodo;
@@ -24,6 +24,7 @@ NODO *crearNodo(int dato)
 void eliminarNodo(NODO *nodo)
 {
     nodo->dato = 0;
+    nodo->padre = NULL;
     nodo->izq = NULL;
     nodo->der = NULL;
     free(nodo);
@@ -37,36 +38,139 @@ ARBOL *crearArbol(void)
     return arbol;
 }
 
+void arbolVacio(ARBOL *arbol)
+{
+    return arbol->raiz == NULL;
+}
+
+void insertarEnArbol(int dato, ARBOL *arbol)
+{
+    insertar(dato, arbol->raiz);
+}
+
 void insertar(int dato, NODO *raiz)
 {
-    if (raiz == NULL)
+    if (raiz->dato == NULL)
     {
-        raiz = crearNodo(dato);
+        raiz->dato = dato;
+    }
+    else if (dato > raiz->dato)
+    {
+        if (raiz->izq == NULL)
+        {
+            NODO *hijoIzq = crearNodo(dato);
+            raiz->izq = &hijoIzq;
+            hijoIzq->padre = &raiz;
+        }
+        else
+        {
+            ins(dato, &raiz->izq);
+        }
+    }
+    else if (raiz->dato < dato)
+    {
+        if (raiz->der == NULL)
+        {
+            NODO *hijoIzq = crearNodo(dato);
+            raiz->der = &hijoIzq;
+            hijoIzq->padre = &raiz;
+        }
+        else
+        {
+            ins(dato, &raiz->der);
+        }
+    }
+}
+
+void eliminarEnArbol(int dato, ARBOL *arbol)
+{
+    if (arbol->raiz == NULL)
+    {
+        printf("Arbol vacio, como tu corazón =( ");
+    }
+    else
+    {
+        eliminar(dato, arbol->raiz);
+    }
+}
+
+void eliminar(int dato, NODO *raiz)
+{
+    if (raiz->dato == dato)
+    {
+        if (raiz->padre != NULL)
+        {
+            if(raiz->der == NULL & raiz == NULL){
+                raiz->padre == NULL;
+                eliminarNodo(raiz);
+            } 
+            else if (raiz->izq != NULL & raiz->der == NULL)
+            {
+                raiz->padre = raiz->izq;
+                eliminarNodo(raiz);
+            }
+            else if (raiz->izq == NULL & raiz->der != NULL)
+            {
+                raiz->padre = raiz->der;
+                eliminarNodo(raiz);
+            }else
+            {
+                if (raiz->dato < raiz->padre->dato)
+                {
+                    /* code */
+                }
+                
+            }  
+        }
+        else
+        {
+            eliminarNodo(raiz);
+        }
     }
     else if (dato < raiz->dato)
     {
         if (raiz->izq == NULL)
-            raiz->izq = crearNodo(dato);
-        else
-            insertar(dato, raiz->izq);
+            return 0;
+
+        eliminar(dato, raiz->der);
     }
-    else
+    else if (raiz->dato < dato)
     {
         if (raiz->der == NULL)
-            raiz->der = crearNodo(dato);
-        else
-            insertar(dato, raiz->der);
+            return 0;
+        eliminar(dato, raiz->der);
     }
 }
 
-void eliminar(void)
+int buscarInArbol(int dato, ARBOL *arbol)
 {
-    printf("in porsess");
+    if (arbol->raiz->dato == NULL)
+        return 0;
+    else
+    {
+        return buscar(dato, arbol->raiz->dato);
+    }
 }
-void buscar(void)
+
+int buscar(int dato, NODO *raiz)
 {
-    printf("in porsess");
+    if (raiz->dato == dato)
+        return 1;
+    else if (dato < raiz->dato)
+    {
+        if (raiz->izq == NULL)
+            return 0;
+
+        buscar(dato, raiz->der);
+    }
+    else if (raiz->dato < dato)
+    {
+        if (raiz->der == NULL)
+            return 0;
+        buscar(dato, raiz->der);
+    }
 }
+
 void recorrerPreOrden(void)
 {
     printf("in porsess");

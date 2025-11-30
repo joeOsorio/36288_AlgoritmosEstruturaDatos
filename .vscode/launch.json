@@ -15,7 +15,7 @@
                     "value": "${env:PATH};C:/Strawberry/c/bin"
                 }
             ],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "C:/Strawberry/c/bin/gdb.exe",
             "preLaunchTask": "C/C++: Compilación con (C90 estricto)",

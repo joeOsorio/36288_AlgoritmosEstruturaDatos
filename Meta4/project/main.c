@@ -6,7 +6,7 @@
  * Comments: Test para funciones de árboles
  ***************************************************/
 
-#include "ARBOLES.c"
+#include "ARBOLES.h"
 
 void test1(void);
 void testCreacion(void);

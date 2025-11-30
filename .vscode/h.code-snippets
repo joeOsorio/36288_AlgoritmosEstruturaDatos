@@ -7,7 +7,7 @@
       "",
       "\t${0:}",
       "",
-      "#endif // ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H_INCLUDED"
+      "#endif /* ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H_INCLUDED */"
     ],
     "description": "Plantilla para un archivo de encabezado de colas en C."
   }

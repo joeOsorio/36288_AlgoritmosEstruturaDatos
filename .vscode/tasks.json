@@ -8,7 +8,8 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "*.c",          // En caso de que otros archivos .c esten en otra carpeta, añade /{NombreCarpeta}/*.c
+                // "${file}",  
                 "-std=c90",
                 "-Wall",
                 "-Werror",
