@@ -1,4 +1,4 @@
-/****************************************************
+****************************************************
  * File: main
  * Author: Joshua Osorio
  * Materia: Algoritmos y Estructura de Datos (551)

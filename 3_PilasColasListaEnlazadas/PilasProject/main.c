@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "pila.h"
 
-void mostrar_estado_pila(nodo *tope)
+void mostrar_estado_pila(nodo_pila *tope)
 {
     printf("=== ESTADO ACTUAL DE LA PILA ===\n");
     pila_mostrar(tope);
@@ -27,7 +27,7 @@ void mostrar_estado_pila(nodo *tope)
 
 int main(void)
 {
-    nodo *tope = NULL;
+    nodo_pila *tope = NULL;
     int opcion, valor;
 
     printf("=== PRUEBA DE LIBRERIA PILA ===\n");

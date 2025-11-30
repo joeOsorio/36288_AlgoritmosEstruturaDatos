@@ -16,14 +16,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int pila_vacia(nodo *tope)
+int pila_vacia(nodo_pila *tope)
 {
     return (tope == NULL);
 }
 
-nodo *pila_crear_nodo(int n)
+nodo_pila *pila_crear_nodo(int n)
 {
-    nodo *nuevo_nodo = (nodo *)malloc(sizeof(nodo));
+    nodo_pila *nuevo_nodo = (nodo_pila *)malloc(sizeof(nodo_pila));
     if (nuevo_nodo == NULL)
     {
         fprintf(stderr, "Error: No se pudo asignar memoria para nuevo nodo\n");
@@ -34,9 +34,9 @@ nodo *pila_crear_nodo(int n)
     return nuevo_nodo;
 }
 
-nodo *pila_push(nodo *tope, int n)
+nodo_pila *pila_push(nodo_pila *tope, int n)
 {
-    nodo *nuevo_nodo = pila_crear_nodo(n);
+    nodo_pila *nuevo_nodo = pila_crear_nodo(n);
     if (nuevo_nodo == NULL)
     {
         return tope; /* Retorna la pila original si falla la creación */
@@ -46,9 +46,9 @@ nodo *pila_push(nodo *tope, int n)
     return nuevo_nodo;
 }
 
-nodo *pila_pop(nodo *tope)
+nodo_pila *pila_pop(nodo_pila *tope)
 {
-    nodo *aux;
+    nodo_pila *aux;
 
     if (pila_vacia(tope))
     {
@@ -63,9 +63,9 @@ nodo *pila_pop(nodo *tope)
     return tope;
 }
 
-void pila_mostrar(nodo *tope)
+void pila_mostrar(nodo_pila *tope)
 {
-    nodo *actual = tope;
+    nodo_pila *actual = tope;
     if (pila_vacia(tope))
     {
         printf("La pila esta vacia\n");
@@ -90,7 +90,7 @@ void pila_mostrar(nodo *tope)
  * @param tope Puntero al tope de la pila
  * @return NULL siempre, ya que la pila queda vacía
  */
-nodo *pila_vaciar(nodo *tope)
+nodo_pila *pila_vaciar(nodo_pila *tope)
 {
     while (!pila_vacia(tope))
     {
@@ -104,10 +104,10 @@ nodo *pila_vaciar(nodo *tope)
  * @param tope Puntero al tope de la pila
  * @return Cantidad de elementos en la pila
  */
-int pila_size(nodo *tope)
+int pila_size(nodo_pila *tope)
 {
     int contador = 0;
-    nodo *actual = tope;
+    nodo_pila *actual = tope;
 
     while (actual != NULL)
     {
