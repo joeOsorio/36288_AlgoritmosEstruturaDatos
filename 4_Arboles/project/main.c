@@ -1,153 +1,117 @@
-/****************************************************
- * File: main
- * Author: Joshua Osorio
- * Materia: Algoritmos y Estructura de Datos (551)
- * Date: Nov/12/2025
- * Comments: Test para funciones de árboles
- ***************************************************/
+/**
+ * @file main.c
+ * @brief Programa de prueba para libreria de arboles binarios
+ * @author J. Osorio.
+ * @date Nov/2025
+ */
 
-#include "ARBOLES.h"
+#include <stdio.h>
+#include "arbol.h"
 
-void test1(void);
-void testCreacion(void);
-void testInsercion(void);
 
 int main(void)
 {
-    SetConsoleOutputCP(CP_UTF8); /* Cambiar a UTF-8 */
-    printf("=== INICIANDO PRUEBAS DE ARBOLES ===\n\n");
+    int opcion, dato;
+    nodoArbol *raiz = NULL;
 
-    testCreacion();
-    testInsercion();
-    test1();
-
-    printf("\n=== PRUEBAS COMPLETADAS ===\n");
-    return 0;
-}
-
-void testCreacion(void)
-{
-    ARBOL *arbol;
-    NODO *nodo;
-    printf("--- Prueba de Creación ---\n");
-
-    /* Test crear árbol */
-    arbol = crearArbol();
-    printf("Árbol creado: %p\n", (void *)arbol);
-    printf("Raíz del árbol: %p\n", (void *)arbol->raiz);
-    printf("Tamaño del árbol: %d\n", arbol->tamano);
-
-    /* Test crear nodo */
-    nodo = crearNodo(100);
-    printf("Nodo creado con dato: %d\n", nodo->dato);
-    printf("Hijo izquierdo: %p\n", (void *)nodo->izq);
-    printf("Hijo derecho: %p\n", (void *)nodo->der);
-
-    /* Test eliminar nodo */
-    eliminarNodo(nodo);
-    printf("Nodo eliminado correctamente\n");
-
-    free(arbol);
-    printf("Árbol liberado\n\n");
-}
-
-void testInsercion(void)
-{
-    ARBOL *arbol = crearArbol();
-    printf("--- Prueba de Inserción ---\n");
-
-    /* Crear raíz manualmente ya que insertar no modifica la raíz del árbol */
-    arbol->raiz = crearNodo(50);
-    arbol->tamano = 1;
-    printf("Raíz creada con dato: %d\n", arbol->raiz->dato);
-
-    /* Insertar elementos menores */
-    printf("Insertando 30...\n");
-    insertar(30, arbol->raiz);
-    if (arbol->raiz->izq != NULL)
-    {
-        printf("Nodo izquierdo creado: %d\n", arbol->raiz->izq->dato);
-    }
-
-    printf("Insertando 20...\n");
-    insertar(20, arbol->raiz);
-
-    /* Insertar elementos mayores */
-    printf("Insertando 70...\n");
-    insertar(70, arbol->raiz);
-    if (arbol->raiz->der != NULL)
-    {
-        printf("Nodo derecho creado: %d\n", arbol->raiz->der->dato);
-    }
-
-    printf("Insertando 90...\n");
-    insertar(90, arbol->raiz);
-
-    /* Probar funciones en proceso */
-    printf("\nProbando funciones en desarrollo:\n");
-    eliminar();
-    printf("\n");
-    buscar();
-    printf("\n");
-    recorrerPreOrden();
-    printf("\n");
-    recorrerIntOrden();
-    printf("\n");
-    recorrerPosOrden();
-    printf("\n");
-
-    /* Liberar memoria (de manera básica) */
-    if (arbol->raiz != NULL)
-    {
-        if (arbol->raiz->izq != NULL)
-            eliminarNodo(arbol->raiz->izq);
-        if (arbol->raiz->der != NULL)
-            eliminarNodo(arbol->raiz->der);
-        eliminarNodo(arbol->raiz);
-    }
-    free(arbol);
-    printf("Memoria liberada\n\n");
-}
-
-void test1(void)
-{
-    int dato;
-    ARBOL *arbolito;
-    printf("--- Prueba Interactiva ---\n");
-
-    arbolito = crearArbol();
-    printf("Árbol creado exitosamente\n");
-
+    printf("\n--- ARBOL BINARIO ---\n");
     do
     {
-        printf("\nIngresa un numero:\t");
-        scanf("%d", &dato);
+        printf("\nOperaciones del Arbol:\n");
+        printf("1. Insertar\n");
+        printf("2. Eliminar\n");
+        printf("3. Recorrer Pre-Orden\n");
+        printf("4. Recorrer In-Orden\n");
+        printf("5. Recorrer Post-Orden\n");
+        printf("6. Mostrar Arbol\n");
+        printf("7. Tamano del Arbol\n");
+        printf("8. Verificar si esta vacio\n");
+        printf("9. Verificar si esta lleno\n");
+        printf("10. Vaciar Arbol\n");
+        printf("11. Regresar al menu principal\n");
+        printf("Opcion: ");
 
-        /* Para la primera inserción necesitamos crear la raíz manualmente */
-        if (arbolito->raiz == NULL)
+        if (scanf("%d", &opcion) != 1)
         {
-            arbolito->raiz = crearNodo(dato);
-            arbolito->tamano = 1;
-            printf("Raíz establecida: %d\n", dato);
+            fprintf(stderr, "Error: Entrada invalida\n");
+            while (getchar() != '\n')
+                ; /* Limpiar buffer */
+            continue;
         }
-        else
+
+        switch (opcion)
         {
-            insertar(dato, arbolito->raiz);
-            printf("Número %d insertado\n", dato);
+        case 1:
+            printf("Dato a insertar: ");
+            if (scanf("%d", &dato) != 1)
+            {
+                fprintf(stderr, "Error: Dato invalido\n");
+                break;
+            }
+            raiz = arbol_insertar(raiz, dato);
+            printf("Dato %d insertado\n", dato);
+            break;
+
+        case 2:
+            printf("Dato a eliminar: ");
+            if (scanf("%d", &dato) != 1)
+            {
+                fprintf(stderr, "Error: Dato invalido\n");
+                break;
+            }
+            raiz = arbol_eliminar(raiz, dato);
+            break;
+
+        case 3:
+            printf("Recorrido Pre-Orden: ");
+            arbol_recorrer_preorden(raiz);
+            printf("\n");
+            break;
+
+        case 4:
+            printf("Recorrido In-Orden: ");
+            arbol_recorrer_inorden(raiz);
+            printf("\n");
+            break;
+
+        case 5:
+            printf("Recorrido Post-Orden: ");
+            arbol_recorrer_postorden(raiz);
+            printf("\n");
+            break;
+
+        case 6:
+            arbol_mostrar(raiz);
+            break;
+
+        case 7:
+            printf("Tamano del arbol: %d nodos\n", arbol_tamano(raiz));
+            break;
+
+        case 8:
+            printf("Arbol vacio: %s\n", arbol_vacio(raiz) ? "SI" : "NO");
+            break;
+
+        case 9:
+            printf("Memoria llena: %s\n", arbol_lleno() ? "SI" : "NO");
+            break;
+
+        case 10:
+            raiz = arbol_vaciar(raiz);
+            printf("Arbol vaciado completamente\n");
+            break;
+
+        case 11:
+            printf("Regresando...\n");
+            break;
+
+        default:
+            printf("Opcion invalida\n");
+            break;
         }
+    } while (opcion != 11);
 
-        printf("\nSeguir?  si:1 || No:0\t");
-        scanf("%d", &dato);
-    } while (dato == 1);
-
-    printf("Prueba interactiva completada\n");
-
-    /* Limpiar memoria */
-    if (arbolito->raiz != NULL)
-    {
-        /* Nota: Esta es una limpieza básica, no recursiva */
-        /* Para un árbol completo necesitarías una función recursiva de limpieza */
-        eliminarNodo(arbolito->raiz);
-    }
-    free(arbolito);
+    /* Liberar memoria antes de salir */
+    raiz = arbol_vaciar(raiz);
+    return 0;
 }
