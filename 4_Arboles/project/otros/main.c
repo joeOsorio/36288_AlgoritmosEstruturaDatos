@@ -14,7 +14,6 @@ void testInsercion(void);
 
 int main(void)
 {
-    SetConsoleOutputCP(CP_UTF8); /* Cambiar a UTF-8 */
     printf("=== INICIANDO PRUEBAS DE ARBOLES ===\n\n");
 
     testCreacion();
@@ -29,12 +28,12 @@ void testCreacion(void)
 {
     ARBOL *arbol;
     NODO *nodo;
-    printf("--- Prueba de Creación ---\n");
+    printf("--- Prueba de Creacion ---\n");
 
     /* Test crear árbol */
     arbol = crearArbol();
-    printf("Árbol creado: %p\n", (void *)arbol);
-    printf("Raíz del árbol: %p\n", (void *)arbol->raiz);
+    printf("Arbol creado: %p\n", (void *)arbol);
+    printf("Raiz del árbol: %p\n", (void *)arbol->raiz);
     printf("Tamaño del árbol: %d\n", arbol->tamano);
 
     /* Test crear nodo */
@@ -48,18 +47,18 @@ void testCreacion(void)
     printf("Nodo eliminado correctamente\n");
 
     free(arbol);
-    printf("Árbol liberado\n\n");
+    printf("Arbol liberado\n\n");
 }
 
 void testInsercion(void)
 {
     ARBOL *arbol = crearArbol();
-    printf("--- Prueba de Inserción ---\n");
+    printf("--- Prueba de Insercion ---\n");
 
-    /* Crear raíz manualmente ya que insertar no modifica la raíz del árbol */
+    /* Crear raiz manualmente ya que insertar no modifica la raiz del árbol */
     arbol->raiz = crearNodo(50);
     arbol->tamano = 1;
-    printf("Raíz creada con dato: %d\n", arbol->raiz->dato);
+    printf("Raiz creada con dato: %d\n", arbol->raiz->dato);
 
     /* Insertar elementos menores */
     printf("Insertando 30...\n");
@@ -116,19 +115,19 @@ void test1(void)
     printf("--- Prueba Interactiva ---\n");
 
     arbolito = crearArbol();
-    printf("Árbol creado exitosamente\n");
+    printf("Arbol creado exitosamente\n");
 
     do
     {
         printf("\nIngresa un numero:\t");
         scanf("%d", &dato);
 
-        /* Para la primera inserción necesitamos crear la raíz manualmente */
+        /* Para la primera insercion necesitamos crear la raiz manualmente */
         if (arbolito->raiz == NULL)
         {
             arbolito->raiz = crearNodo(dato);
             arbolito->tamano = 1;
-            printf("Raíz establecida: %d\n", dato);
+            printf("Raiz establecida: %d\n", dato);
         }
         else
         {
@@ -146,7 +145,7 @@ void test1(void)
     if (arbolito->raiz != NULL)
     {
         /* Nota: Esta es una limpieza básica, no recursiva */
-        /* Para un árbol completo necesitarías una función recursiva de limpieza */
+        /* Para un árbol completo necesitarias una funcion recursiva de limpieza */
         eliminarNodo(arbolito->raiz);
     }
     free(arbolito);

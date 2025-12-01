@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "grafos.h"
+#include <windows.h>
 
 int main(void)
 {
@@ -16,6 +17,7 @@ int main(void)
     int *distancias;
     int i;
     char nombre[50];
+    SetConsoleOutputCP(CP_UTF8); /* Cambiar a UTF-8 */
 
     printf("Práctica de Grafos - Búsqueda en Anchura (BFS -> Breadth First Search)\n");
 

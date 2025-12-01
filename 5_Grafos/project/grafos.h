@@ -8,7 +8,7 @@
 #ifndef GRAFOS_H
 #define GRAFOS_H
 
-#include "ColasProject/colas.h"
+#include "colas.h"
 
 /* Estructura para nodos de la lista de adyacencia */
 typedef struct nodoAdyacencia
