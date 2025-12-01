@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include "arbol.h"
 
-
 int main(void)
 {
     int opcion, dato;
@@ -33,7 +32,7 @@ int main(void)
 
         if (scanf("%d", &opcion) != 1)
         {
-            fprintf(stderr, "Error: Entrada invalida\n");
+            printf("Error: Entrada invalida\n");
             while (getchar() != '\n')
                 ; /* Limpiar buffer */
             continue;
@@ -45,7 +44,7 @@ int main(void)
             printf("Dato a insertar: ");
             if (scanf("%d", &dato) != 1)
             {
-                fprintf(stderr, "Error: Dato invalido\n");
+                printf("Error: Dato invalido\n");
                 break;
             }
             raiz = arbol_insertar(raiz, dato);
@@ -56,7 +55,7 @@ int main(void)
             printf("Dato a eliminar: ");
             if (scanf("%d", &dato) != 1)
             {
-                fprintf(stderr, "Error: Dato invalido\n");
+                printf("Error: Dato invalido\n");
                 break;
             }
             raiz = arbol_eliminar(raiz, dato);
@@ -102,7 +101,7 @@ int main(void)
             break;
 
         case 11:
-            printf("Regresando...\n");
+            printf("Saliendo...\n");
             break;
 
         default:

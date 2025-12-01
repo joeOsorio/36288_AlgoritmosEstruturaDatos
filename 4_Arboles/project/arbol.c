@@ -22,7 +22,7 @@ nodoArbol *arbol_crear_nodo(int dato)
     nuevo_nodo = (nodoArbol *)malloc(sizeof(nodoArbol));
     if (nuevo_nodo == NULL)
     {
-        fprintf(stderr, "Error: No se pudo crear nodo del arbol\n");
+        printf("Error: No se pudo crear nodo del arbol\n");
         return NULL;
     }
 
@@ -70,25 +70,26 @@ nodoArbol *arbol_insertar(nodoArbol *raiz, int dato)
 {
     if (arbol_lleno())
     {
-        fprintf(stderr, "Error: No hay memoria disponible\n");
+        printf("Error: No hay memoria disponible\n");
         return raiz;
     }
 
-    if (raiz == NULL)
+    else if (raiz == NULL)
     {
         return arbol_crear_nodo(dato);
     }
 
-    if (dato < raiz->dato)
+    else if (dato < raiz->dato)
     {
         raiz->izquierdo = arbol_insertar(raiz->izquierdo, dato);
     }
+
     else if (dato > raiz->dato)
     {
         raiz->derecho = arbol_insertar(raiz->derecho, dato);
     }
-    /* Si el dato es igual, no se inserta (evita duplicados) */
 
+    /* Si el dato es igual, no se inserta (evita duplicados) */
     return raiz;
 }
 
@@ -97,6 +98,7 @@ nodoArbol *arbol_insertar(nodoArbol *raiz, int dato)
  * @param raiz Raiz del arbol
  * @return Nodo con dato minimo
  */
+
 nodoArbol *arbol_encontrar_minimo(nodoArbol *raiz)
 {
     nodoArbol *actual;
@@ -151,7 +153,7 @@ nodoArbol *arbol_eliminar(nodoArbol *raiz, int dato)
 
     if (raiz == NULL)
     {
-        fprintf(stderr, "Error: dato %d no encontrado en el arbol\n", dato);
+        printf("Error: dato %d no encontrado en el arbol\n", dato);
         return NULL;
     }
 
@@ -235,13 +237,14 @@ void arbol_recorrer_postorden(nodoArbol *raiz)
  * @param raiz Raiz del arbol
  * @return Cantidad de nodos
  */
+
 int arbol_tamano(nodoArbol *raiz)
 {
+    /* Coaso base*/
     if (raiz == NULL)
     {
         return 0;
     }
-
     return 1 + arbol_tamano(raiz->izquierdo) + arbol_tamano(raiz->derecho);
 }
 
@@ -249,6 +252,7 @@ int arbol_tamano(nodoArbol *raiz)
  * @brief Muestra el arbol de forma jerarquica (simplificada)
  * @param raiz Raiz del arbol
  */
+
 void arbol_mostrar(nodoArbol *raiz)
 {
     if (arbol_vacio(raiz))
@@ -257,7 +261,7 @@ void arbol_mostrar(nodoArbol *raiz)
         return;
     }
 
-    printf("Recorrido inorden del arbol: ");
+    printf("Recorrido in-orden del arbol: ");
     arbol_recorrer_inorden(raiz);
     printf("\n");
 }
