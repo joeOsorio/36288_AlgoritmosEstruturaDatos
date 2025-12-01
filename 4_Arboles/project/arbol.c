@@ -1,7 +1,7 @@
 /**
  * @file arbol.c
  * @brief Implementacion de funciones para manejo de arboles binarios
- * @author J. Osorio, Y. Prado and A. Fabara
+ * @author J. Osorio.
  * @date Nov/2025
  */
 

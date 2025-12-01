@@ -1,7 +1,7 @@
 /**
  * @file colas.c
  * @brief Implementación de funciones para manejo de colas
- * @author J. Osorio, Y. Prado and A. Fabara
+ * @author J. Osorio, Y. Prado y A. Fabara
  * @date Nov/2025
  */
 

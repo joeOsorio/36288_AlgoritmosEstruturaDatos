@@ -1,7 +1,7 @@
 /**
  * @file grafos.h
  * @brief Librería para implementación de grafos con listas de adyacencia
- * @author J. Osorio, Y. Prado and A. Fabara
+ * @author J. Osorio, Y. Prado y A. Fabara
  * @date Nov/2025
  */
 

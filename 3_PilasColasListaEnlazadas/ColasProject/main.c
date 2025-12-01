@@ -1,7 +1,7 @@
 /**
  * @file main.c
  * @brief Programa de prueba para librería de colas
- * @author J. Osorio, Y. Prado and A. Fabara
+ * @author J. Osorio, Y. Prado y A. Fabara
  * @date 2025
  */
 

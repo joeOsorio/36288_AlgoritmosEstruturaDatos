@@ -2,7 +2,7 @@
 /**
  * @file pila.h
  * @brief Librería para implementación de pilas con listas enlazadas
- * @author J. Osorio, Y. Prado and A. Fabara
+ * @author J. Osorio, Y. Prado y A. Fabara
  * @date 2025
  */
 
