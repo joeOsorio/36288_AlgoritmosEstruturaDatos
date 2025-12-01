@@ -17,9 +17,12 @@ typedef struct Nodo
 typedef struct Grafo
 {
     int numVertices;
-    Nodo *listasAdy[9]; /* Array de punteros  */
-    char nombres[9];    /* Para guardar 'r', 's', 't' */
-    int visitado[9];    /* Para la busqueda en anchura */
+    /* Array de punteros  */
+    Nodo *listasAdy[9];
+    /* Para guardar 'r', 's', 't' */
+    char nombres[9];
+    /* Para la busqueda en anchura */
+    int visitado[9];
 } Grafo;
 
 typedef struct Cola
@@ -209,6 +212,7 @@ void BFS(Grafo *grafo, int nodoInicio)
 {
     Cola *q = crearCola();
     Nodo *temp;
+    int nodoActualIndex, vecinoIndex;
     grafo->visitado[nodoInicio] = 1;
     encolar(q, nodoInicio);
 
@@ -217,14 +221,14 @@ void BFS(Grafo *grafo, int nodoInicio)
     while (!esVacia(q))
     {
         /* Sacar nodo actual */
-        int nodoActualIndex = desencolar(q);
+        nodoActualIndex = desencolar(q);
         printf("%c ", grafo->nombres[nodoActualIndex]);
 
         /* Buscar vecinos */
         temp = grafo->listasAdy[nodoActualIndex];
         while (temp)
         {
-            int vecinoIndex = temp->destino;
+            vecinoIndex = temp->destino;
 
             /* Si no ha sido visitado, lo marcamos y encolamos */
             if (grafo->visitado[vecinoIndex] == 0)
@@ -241,7 +245,7 @@ void calcularDistancia(Grafo *grafo, int inicio, int destino)
 {
     Cola *q = crearCola();
     Nodo *temp;
-    int distancias[9], i, actual;
+    int distancias[9], i, actual, vecino;
 
     /* 2. Inicializar distancias en -1 (sirve como "no visitado") */
     for (i = 0; i < 9; i++)
@@ -269,7 +273,7 @@ void calcularDistancia(Grafo *grafo, int inicio, int destino)
         temp = grafo->listasAdy[actual];
         while (temp)
         {
-            int vecino = temp->destino;
+            vecino = temp->destino;
 
             /* Si distancia es -1, significa que no ha sido visitado */
             if (distancias[vecino] == -1)
