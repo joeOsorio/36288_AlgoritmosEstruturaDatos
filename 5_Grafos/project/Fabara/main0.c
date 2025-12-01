@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_NODOS 9
-
 typedef struct Nodo
 {
     int destino;
@@ -19,29 +17,33 @@ typedef struct Nodo
 typedef struct Grafo
 {
     int numVertices;
-    Nodo *listasAdy[MAX_NODOS]; /* Array de punteros  */
-    char nombres[MAX_NODOS];    /* Para guardar 'r', 's', 't' */
-    int visitado[MAX_NODOS];    /* Para la busqueda en anchura */
+    Nodo *listasAdy[9]; /* Array de punteros  */
+    char nombres[9];    /* Para guardar 'r', 's', 't' */
+    int visitado[9];    /* Para la busqueda en anchura */
 } Grafo;
 
 typedef struct Cola
 {
-    int items[MAX_NODOS];
+    int items[9];
     int frente;
     int final;
 } Cola;
 
-Grafo *crearGrafo(void);
 Nodo *crearNodo(int destino);
+
+Grafo *crearGrafo(void);
 void agregarArista(Grafo *grafo, int origen, int destino);
+void realizarConexiones(Grafo *grafo);
 void imprimirGrafo(Grafo *grafo);
+void BFS(Grafo *grafo, int nodoInicio);
+void calcularDistancia(Grafo *grafo, int inicio, int destino);
+
+/* Prototipos para implementar colas */
+
 Cola *crearCola(void);
 int esVacia(Cola *q);
 void encolar(Cola *q, int valor);
 int desencolar(Cola *q);
-void BFS(Grafo *grafo, int nodoInicio);
-void calcularDistancia(Grafo *grafo, int inicio, int destino);
-void realizarConexiones(Grafo *grafo);
 
 int main(void)
 {
@@ -115,21 +117,20 @@ Grafo *crearGrafo(void)
     Grafo *grafo = (Grafo *)malloc(sizeof(Grafo));
     char letras[] = {'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     int i;
-    grafo->numVertices = MAX_NODOS;
+    grafo->numVertices = 9;
 
     /* Inicializar listas en NULL y nombres */
 
-    for (i = 0; i < MAX_NODOS; i++)
+    for (i = 0; i < 9; i++)
     {
         grafo->listasAdy[i] = NULL;
-        grafo->nombres[i] = letras[i]; /* Asignamos r=0, s=1, etc. */
+        grafo->nombres[i] = letras[i]; /* Asignamos r=0, s=1. */
         grafo->visitado[i] = 0;
     }
     return grafo;
 }
 
-/*  Agregar Arista (Conexión) */
-/* Como es NO dirigido, conectamos A->B y B->A */
+/* Manejamos grafo no dirigido, se realizan conexiones en ambos sentidos */
 void agregarArista(Grafo *grafo, int origen, int destino)
 {
     /* Agregar arista de origen -> destino */
@@ -137,7 +138,7 @@ void agregarArista(Grafo *grafo, int origen, int destino)
     nuevoNodo->sig = grafo->listasAdy[origen];
     grafo->listasAdy[origen] = nuevoNodo;
 
-    /* Agregar arista de destino -> origen (Es no dirigido) */
+    /* Agregar arista de destino -> origen */
     nuevoNodo = crearNodo(origen);
     nuevoNodo->sig = grafo->listasAdy[destino];
     grafo->listasAdy[destino] = nuevoNodo;
@@ -177,10 +178,14 @@ int esVacia(Cola *q)
 }
 void encolar(Cola *q, int valor)
 {
-    if (q->final == MAX_NODOS - 1)
+    if (q->final == 9 - 1)
+    {
         return;
+    }
     if (q->frente == -1)
+    {
         q->frente = 0;
+    }
     q->final++;
     q->items[q->final] = valor;
 }
@@ -188,7 +193,9 @@ int desencolar(Cola *q)
 {
     int item;
     if (esVacia(q))
+    {
         return -1;
+    }
     item = q->items[q->frente];
     q->frente++;
     if (q->frente > q->final)
@@ -234,10 +241,10 @@ void calcularDistancia(Grafo *grafo, int inicio, int destino)
 {
     Cola *q = crearCola();
     Nodo *temp;
-    int distancias[MAX_NODOS], i, actual;
+    int distancias[9], i, actual;
 
     /* 2. Inicializar distancias en -1 (sirve como "no visitado") */
-    for (i = 0; i < MAX_NODOS; i++)
+    for (i = 0; i < 9; i++)
     {
         distancias[i] = -1;
     }
