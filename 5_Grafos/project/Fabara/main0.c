@@ -1,3 +1,10 @@
+/****************************************************
+ * @file main.c
+ * @brief Programa principal para prueba de grafos con BFS
+ * @author J. Osorio, Y. Prado y A. Fabara
+ * @date Nov/2025
+ ***************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -63,7 +70,6 @@ void agregarArista(Grafo *grafo, int origen, int destino)
     grafo->listasAdy[destino] = nuevoNodo;
 }
 
-/* Imprimir el grafo (Lista de adyacencia) */
 void imprimirGrafo(Grafo *grafo)
 {
     printf("\n--- ESTRUCTURA DE ADYACENCIA DEL GRAFO ---\n");
@@ -73,10 +79,13 @@ void imprimirGrafo(Grafo *grafo)
         printf("\n Nodo %c conecta con: ", grafo->nombres[i]);
         while (temp)
         {
-            printf("%c -> ", grafo->nombres[temp->destino]);
+            printf("%c", grafo->nombres[temp->destino]);
+            if (temp->sig != NULL)
+            {
+                printf(" -> ");
+            }
             temp = temp->sig;
         }
-        printf("NULL");
     }
     printf("\n");
 }
