@@ -241,6 +241,7 @@ void BFS(Grafo *grafo, int nodoInicio)
     }
     printf("\n");
 }
+
 void calcularDistancia(Grafo *grafo, int inicio, int destino)
 {
     Cola *q = crearCola();

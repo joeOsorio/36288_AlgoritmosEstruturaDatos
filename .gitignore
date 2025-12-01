@@ -22,6 +22,7 @@
 Linux/cimalinux.img
 
 # --- Carpetas de salida / compilación ---
+Presentacion/
 output/
 */output/
 bin/
