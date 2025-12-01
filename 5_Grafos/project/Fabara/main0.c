@@ -31,27 +31,95 @@ typedef struct Cola
     int final;
 } Cola;
 
+Grafo *crearGrafo(void);
+Nodo *crearNodo(int destino);
 void agregarArista(Grafo *grafo, int origen, int destino);
-Grafo *crearGrafo();
-Nodo *crearNodo(int destino);
-Nodo *crearNodo(int destino);
+void imprimirGrafo(Grafo *grafo);
+Cola *crearCola(void);
+int esVacia(Cola *q);
+void encolar(Cola *q, int valor);
+int desencolar(Cola *q);
+void BFS(Grafo *grafo, int nodoInicio);
+void calcularDistancia(Grafo *grafo, int inicio, int destino);
+void realizarConexiones(Grafo *grafo);
 
-/* void agregarArista(Grafo *grafo, int origen, int destino)
+int main(void)
+{
+    Grafo *grafo = crearGrafo();
+
+    realizarConexiones(grafo);
+
+    imprimirGrafo(grafo);
+
+    /* Prueba 1: De 's' (1) a 'z' (8) */
+    calcularDistancia(grafo, 1, 8);
+
+    /*  Prueba 2: De 's' (1) a 'w' (5) */
+    /*  Camino visual: s -> v -> w (2 saltos) o s -> r -> w (2 saltos) */
+    calcularDistancia(grafo, 1, 5);
+
+    /* Prueba 3: De 's' (1) a 's' (1) */
+    calcularDistancia(grafo, 1, 1);
+    BFS(grafo, 1);
+    getchar();
+
+    return 0;
+}
+void realizarConexiones(Grafo *grafo)
+{
+    /*
+         Mapeo de índices:
+         r=0, s=1, t=2, u=3, v=4, w=5, x=6, y=7, z=8
+
+         Se realizan las conexiones de la presentación.
+     */
+
+    /* W (5) conecta con R, V, X, Z */
+    agregarArista(grafo, 5, 0); /* w-r */
+    agregarArista(grafo, 5, 4); /* w-v */
+    agregarArista(grafo, 5, 6); /* w-x */
+    agregarArista(grafo, 5, 8); /* w-z */
+
+    /* R (0) conecta con S, T (y W ya está arriba) */
+    agregarArista(grafo, 0, 1); /* r-s */
+    agregarArista(grafo, 0, 2); /* r-t */
+
+    /* S (1) conecta con V, U (y R ya está) */
+    agregarArista(grafo, 1, 4); /*  s-v */
+    agregarArista(grafo, 1, 3); /*  s-u */
+
+    /* T (2) conecta con U (y R ya está) */
+    agregarArista(grafo, 2, 3); /* t-u */
+
+    /* U (3) conecta con Y (y S, T ya están) */
+    agregarArista(grafo, 3, 7); /* u-y */
+
+    /* V (4) conecta con Y (y W, S ya están) */
+    agregarArista(grafo, 4, 7); /* v-y */
+
+    /* X (6) conecta con Y, Z (y W ya está) */
+    agregarArista(grafo, 6, 7); /*  x-y */
+    agregarArista(grafo, 6, 8); /*  x-z */
+}
+
+Nodo *crearNodo(int destino)
 {
     Nodo *nuevoNodo = (Nodo *)malloc(sizeof(Nodo));
     nuevoNodo->destino = destino;
     nuevoNodo->sig = NULL;
     return nuevoNodo;
-} */
+}
 
-Grafo *crearGrafo()
+Grafo *crearGrafo(void)
 {
     Grafo *grafo = (Grafo *)malloc(sizeof(Grafo));
+    char letras[] = {'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    int i;
     grafo->numVertices = MAX_NODOS;
 
     /* Inicializar listas en NULL y nombres */
-    char letras[] = {'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-    for (int i = 0; i < MAX_NODOS; i++)
+
+    for (i = 0; i < MAX_NODOS; i++)
     {
         grafo->listasAdy[i] = NULL;
         grafo->nombres[i] = letras[i]; /* Asignamos r=0, s=1, etc. */
@@ -69,7 +137,7 @@ void agregarArista(Grafo *grafo, int origen, int destino)
     nuevoNodo->sig = grafo->listasAdy[origen];
     grafo->listasAdy[origen] = nuevoNodo;
 
-    /* Agregar arista de destino -> origen (porque es no dirigido) */
+    /* Agregar arista de destino -> origen (Es no dirigido) */
     nuevoNodo = crearNodo(origen);
     nuevoNodo->sig = grafo->listasAdy[destino];
     grafo->listasAdy[destino] = nuevoNodo;
@@ -77,8 +145,9 @@ void agregarArista(Grafo *grafo, int origen, int destino)
 
 void imprimirGrafo(Grafo *grafo)
 {
+    int i;
     printf("\n--- ESTRUCTURA DE ADYACENCIA DEL GRAFO ---\n");
-    for (int i = 0; i < grafo->numVertices; i++)
+    for (i = 0; i < grafo->numVertices; i++)
     {
         Nodo *temp = grafo->listasAdy[i];
         printf("\n Nodo %c conecta con: ", grafo->nombres[i]);
@@ -95,7 +164,7 @@ void imprimirGrafo(Grafo *grafo)
     printf("\n");
 }
 
-Cola *crearCola()
+Cola *crearCola(void)
 {
     Cola *q = (Cola *)malloc(sizeof(Cola));
     q->frente = -1;
@@ -132,7 +201,7 @@ int desencolar(Cola *q)
 void BFS(Grafo *grafo, int nodoInicio)
 {
     Cola *q = crearCola();
-
+    Nodo *temp;
     grafo->visitado[nodoInicio] = 1;
     encolar(q, nodoInicio);
 
@@ -145,7 +214,7 @@ void BFS(Grafo *grafo, int nodoInicio)
         printf("%c ", grafo->nombres[nodoActualIndex]);
 
         /* Buscar vecinos */
-        Nodo *temp = grafo->listasAdy[nodoActualIndex];
+        temp = grafo->listasAdy[nodoActualIndex];
         while (temp)
         {
             int vecinoIndex = temp->destino;
@@ -164,10 +233,11 @@ void BFS(Grafo *grafo, int nodoInicio)
 void calcularDistancia(Grafo *grafo, int inicio, int destino)
 {
     Cola *q = crearCola();
-    int distancias[MAX_NODOS];
+    Nodo *temp;
+    int distancias[MAX_NODOS], i, actual;
 
     /* 2. Inicializar distancias en -1 (sirve como "no visitado") */
-    for (int i = 0; i < MAX_NODOS; i++)
+    for (i = 0; i < MAX_NODOS; i++)
     {
         distancias[i] = -1;
     }
@@ -177,20 +247,19 @@ void calcularDistancia(Grafo *grafo, int inicio, int destino)
     encolar(q, inicio);
 
     /* Bandera para saber si llegamos */
-    int encontrado = 0;
 
     while (!esVacia(q))
     {
-        int actual = desencolar(q);
+
+        actual = desencolar(q);
 
         /* Si encontramos el destino, podemos detenernos (opcional) */
         if (actual == destino)
         {
-            encontrado = 1;
             break;
         }
 
-        Nodo *temp = grafo->listasAdy[actual];
+        temp = grafo->listasAdy[actual];
         while (temp)
         {
             int vecino = temp->destino;
@@ -222,57 +291,4 @@ void calcularDistancia(Grafo *grafo, int inicio, int destino)
 
     /* Liberamos la memoria */
     free(q);
-}
-
-int main()
-{
-    Grafo *grafo = crearGrafo();
-
-    /*
-     Mapeo de índices para no perdernos:
-     r=0, s=1, t=2, u=3, v=4, w=5, x=6, y=7, z=8
-
-     Conexiones de la imagen:
-     W (5) conecta con R, V, X, Z
-     */
-    agregarArista(grafo, 5, 0); /* w-r */
-    agregarArista(grafo, 5, 4); /* w-v */
-    agregarArista(grafo, 5, 6); /* w-x */
-    agregarArista(grafo, 5, 8); /* w-z */
-
-    /* R (0) conecta con S, T (y W ya está arriba) */
-    agregarArista(grafo, 0, 1); /* r-s */
-    agregarArista(grafo, 0, 2); /* r-t */
-
-    /* S (1) conecta con V, U (y R ya está) */
-    agregarArista(grafo, 1, 4); /*  s-v */
-    agregarArista(grafo, 1, 3); /*  s-u */
-
-    /* T (2) conecta con U (y R ya está) */
-    agregarArista(grafo, 2, 3); /* t-u */
-
-    /* U (3) conecta con Y (y S, T ya están) */
-    agregarArista(grafo, 3, 7); /* u-y */
-
-    /* V (4) conecta con Y (y W, S ya están) */
-    agregarArista(grafo, 4, 7); /* v-y */
-
-    /* X (6) conecta con Y, Z (y W ya está) */
-    agregarArista(grafo, 6, 7); /*  x-y */
-    agregarArista(grafo, 6, 8); /*  x-z */
-
-    imprimirGrafo(grafo);
-
-    /* Prueba 1: De 's' (1) a 'z' (8) */
-    calcularDistancia(grafo, 1, 8);
-
-    /*  Prueba 2: De 's' (1) a 'w' (5) */
-    /*  Camino visual: s -> v -> w (2 saltos) o s -> r -> w (2 saltos) */
-    calcularDistancia(grafo, 1, 5);
-
-    /* Prueba 3: De 's' (1) a 's' (1) */
-    calcularDistancia(grafo, 1, 1);
-    BFS(grafo, 1);
-
-    return 0;
 }
