@@ -31,13 +31,18 @@ typedef struct Cola
     int final;
 } Cola;
 
-Nodo *crearNodo(int destino)
+void agregarArista(Grafo *grafo, int origen, int destino);
+Grafo *crearGrafo();
+Nodo *crearNodo(int destino);
+Nodo *crearNodo(int destino);
+
+/* void agregarArista(Grafo *grafo, int origen, int destino)
 {
     Nodo *nuevoNodo = (Nodo *)malloc(sizeof(Nodo));
     nuevoNodo->destino = destino;
     nuevoNodo->sig = NULL;
     return nuevoNodo;
-}
+} */
 
 Grafo *crearGrafo()
 {
