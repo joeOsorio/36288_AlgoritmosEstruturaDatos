@@ -52,18 +52,18 @@ Grafo *crearGrafo()
 /* Como es NO dirigido, conectamos A->B y B->A */
 void agregarArista(Grafo *grafo, int origen, int destino)
 {
-    // 1. Agregar arista de origen -> destino
+    /* Agregar arista de origen -> destino */
     Nodo *nuevoNodo = crearNodo(destino);
     nuevoNodo->sig = grafo->listasAdy[origen];
     grafo->listasAdy[origen] = nuevoNodo;
 
-    // 2. Agregar arista de destino -> origen (porque es no dirigido)
+    /* Agregar arista de destino -> origen (porque es no dirigido) */
     nuevoNodo = crearNodo(origen);
     nuevoNodo->sig = grafo->listasAdy[destino];
     grafo->listasAdy[destino] = nuevoNodo;
 }
 
-// Imprimir el grafo (Lista de adyacencia)
+/* Imprimir el grafo (Lista de adyacencia) */
 void imprimirGrafo(Grafo *grafo)
 {
     printf("\n--- ESTRUCTURA DE ADYACENCIA DEL GRAFO ---\n");
@@ -81,7 +81,6 @@ void imprimirGrafo(Grafo *grafo)
     printf("\n");
 }
 
-// --- FUNCIONES DE COLA (Para BFS) ---
 Cola *crearCola()
 {
     Cola *q = (Cola *)malloc(sizeof(Cola));
@@ -111,17 +110,15 @@ int desencolar(Cola *q)
     q->frente++;
     if (q->frente > q->final)
     {
-        q->frente = q->final = -1; // Resetear cola
+        q->frente = q->final = -1;
     }
     return item;
 }
 
-// --- RECORRIDO BFS (Anchura) ---
 void BFS(Grafo *grafo, int nodoInicio)
 {
     Cola *q = crearCola();
 
-    // 1. Configuración inicial
     grafo->visitado[nodoInicio] = 1;
     encolar(q, nodoInicio);
 
@@ -129,17 +126,17 @@ void BFS(Grafo *grafo, int nodoInicio)
 
     while (!esVacia(q))
     {
-        // 2. Sacar nodo actual
+        /* Sacar nodo actual */
         int nodoActualIndex = desencolar(q);
-        printf("%c ", grafo->nombres[nodoActualIndex]); // Imprimimos la letra
+        printf("%c ", grafo->nombres[nodoActualIndex]);
 
-        // 3. Buscar vecinos
+        /* Buscar vecinos */
         Nodo *temp = grafo->listasAdy[nodoActualIndex];
         while (temp)
         {
             int vecinoIndex = temp->destino;
 
-            // Si no ha sido visitado, lo marcamos y encolamos
+            /* Si no ha sido visitado, lo marcamos y encolamos */
             if (grafo->visitado[vecinoIndex] == 0)
             {
                 grafo->visitado[vecinoIndex] = 1;
@@ -152,29 +149,27 @@ void BFS(Grafo *grafo, int nodoInicio)
 }
 void calcularDistancia(Grafo *grafo, int inicio, int destino)
 {
-    // 1. Crear Cola y arreglo de distancias
     Cola *q = crearCola();
     int distancias[MAX_NODOS];
 
-    // 2. Inicializar distancias en -1 (sirve como "no visitado")
+    /* 2. Inicializar distancias en -1 (sirve como "no visitado") */
     for (int i = 0; i < MAX_NODOS; i++)
     {
         distancias[i] = -1;
     }
 
-    // 3. Configuración inicial
-    distancias[inicio] = 0; // La distancia a sí mismo es 0
+    /* 3. Configuración inicial */
+    distancias[inicio] = 0; /* La distancia a sí mismo es 0 */
     encolar(q, inicio);
 
-    // Bandera para saber si llegamos
+    /* Bandera para saber si llegamos */
     int encontrado = 0;
 
-    // 4. Bucle BFS
     while (!esVacia(q))
     {
         int actual = desencolar(q);
 
-        // Si encontramos el destino, podemos detenernos (opcional)
+        /* Si encontramos el destino, podemos detenernos (opcional) */
         if (actual == destino)
         {
             encontrado = 1;
@@ -186,18 +181,16 @@ void calcularDistancia(Grafo *grafo, int inicio, int destino)
         {
             int vecino = temp->destino;
 
-            // Si distancia es -1, significa que no ha sido visitado
+            /* Si distancia es -1, significa que no ha sido visitado */
             if (distancias[vecino] == -1)
             {
-                // LA MAGIA: La distancia del vecino es la del actual + 1
+                /* La distancia del vecino es la del actual + 1 */
                 distancias[vecino] = distancias[actual] + 1;
                 encolar(q, vecino);
             }
             temp = temp->sig;
         }
     }
-
-    // 5. Mostrar resultado
     printf("\n--- CALCULO DE DISTANCIA ---");
     if (distancias[destino] != -1)
     {
@@ -256,18 +249,15 @@ int main()
 
     imprimirGrafo(grafo);
 
-
+    /* Prueba 1: De 's' (1) a 'z' (8) */
     calcularDistancia(grafo, 1, 8);
 
-    // Prueba 2: De 's' (1) a 'w' (5)
-    // Camino visual: s -> v -> w (2 saltos) o s -> r -> w (2 saltos)
+    /*  Prueba 2: De 's' (1) a 'w' (5) */
+    /*  Camino visual: s -> v -> w (2 saltos) o s -> r -> w (2 saltos) */
     calcularDistancia(grafo, 1, 5);
 
-    // Prueba 3: De 's' (1) a 's' (1)
+    /* Prueba 3: De 's' (1) a 's' (1) */
     calcularDistancia(grafo, 1, 1);
-
-    // En la imagen, 's' tiene un 0, lo que sugiere que es el nodo inicial
-    // El índice de 's' es 1.
     BFS(grafo, 1);
 
     return 0;
